@@ -682,13 +682,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Add event listeners for difficulty filter buttons
   difficultyFilters.forEach((button) => {
     button.addEventListener("click", () => {
-      // Update active class
-      difficultyFilters.forEach((btn) => btn.classList.remove("active"));
-      button.classList.add("active");
-
-      // Update current difficulty filter and display filtered activities
-      currentDifficulty = button.dataset.difficulty;
-      displayFilteredActivities();
+      setDifficultyFilter(button.dataset.difficulty);
     });
   });
 
