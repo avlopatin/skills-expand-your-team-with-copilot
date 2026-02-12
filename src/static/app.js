@@ -1057,14 +1057,22 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!canvas) return;
   
   const ctx = canvas.getContext('2d');
+  const PRIMARY_COLOR_RGB = '50, 205, 50'; // Lime green from CSS --primary: #32cd32
   
   // Set canvas size
+  let resizeTimeout;
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
+  
+  function handleResize() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(resizeCanvas, 100);
+  }
+  
   resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('resize', handleResize);
   
   // Branch class
   class Branch {
@@ -1079,7 +1087,7 @@ document.addEventListener("DOMContentLoaded", () => {
       this.maxLength = 100 + Math.random() * 200;
       this.angle = Math.random() * Math.PI * 2;
       this.speed = 0.5 + Math.random() * 1;
-      this.color = `rgba(50, 205, 50, ${0.3 + Math.random() * 0.4})`;
+      this.color = `rgba(${PRIMARY_COLOR_RGB}, ${0.3 + Math.random() * 0.4})`;
       this.branches = [];
       this.hasBranched = false;
     }
