@@ -1,0 +1,112 @@
+name: Documentation Update
+description: Request updates or improvements to documentation
+title: "[Docs]: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve our documentation! Clear documentation helps everyone use and maintain the system.
+
+  - type: textarea
+    id: doc-location
+    attributes:
+      label: Documentation Location
+      description: Which documentation file(s) need to be updated?
+      placeholder: "Example: The README.md file in the src folder, or the development guide in docs/..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem-description
+    attributes:
+      label: Problem Description
+      description: What is wrong, missing, or outdated in the current documentation?
+      placeholder: "Example: The README still describes the old UI from before we added the filtering system..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-content
+    attributes:
+      label: Current Content (if applicable)
+      description: What does the documentation currently say? Copy and paste the outdated or incorrect section.
+      placeholder: "Example: 'This simple app displays a list of activities.' But we now have filters, search, and registration..."
+      render: markdown
+
+  - type: textarea
+    id: proposed-content
+    attributes:
+      label: Proposed Content
+      description: What should the documentation say instead? Provide the updated content if you can.
+      placeholder: "Example: 'This app allows students to browse, filter, and register for extracurricular activities...'"
+      render: markdown
+
+  - type: dropdown
+    id: doc-type
+    attributes:
+      label: Documentation Type
+      description: What type of documentation needs updating?
+      options:
+        - README / Overview
+        - Setup / Installation Instructions
+        - Usage / User Guide
+        - API Documentation
+        - Development Guide
+        - Code Comments
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What specific updates must be made for this to be considered complete?
+      placeholder: |
+        Example:
+        - [ ] README describes current features (filters, search, registration)
+        - [ ] Installation instructions are up to date
+        - [ ] Screenshots show current UI
+        - [ ] All links work correctly
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How urgent is this documentation update?
+      options:
+        - High - Actively misleading users
+        - Medium - Information is outdated
+        - Low - Minor improvements
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: update-scope
+    attributes:
+      label: Scope of Update
+      description: Check all that apply to this documentation update.
+      options:
+        - label: Correcting factual errors
+        - label: Adding missing information
+        - label: Updating for new features
+        - label: Improving clarity or organization
+        - label: Adding examples or screenshots
+        - label: Fixing broken links
+        - label: Updating version information
+
+  - type: textarea
+    id: related-changes
+    attributes:
+      label: Related Code Changes
+      description: If this documentation update is related to specific code changes or features, describe them here.
+      placeholder: "Example: This relates to the dark mode feature added in PR #42..."
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context, links to examples, or helpful information.
