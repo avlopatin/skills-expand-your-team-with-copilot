@@ -1050,3 +1050,109 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeFilters();
   fetchActivities();
 });
+
+// Animated Git-style branch lines background
+(function initGitBranchesAnimation() {
+  const canvas = document.getElementById('git-branches-canvas');
+  if (!canvas) return;
+  
+  const ctx = canvas.getContext('2d');
+  const PRIMARY_COLOR_RGB = '50, 205, 50'; // Lime green from CSS --primary: #32cd32
+  
+  // Set canvas size
+  let resizeTimeout;
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  
+  function handleResize() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(resizeCanvas, 100);
+  }
+  
+  resizeCanvas();
+  window.addEventListener('resize', handleResize);
+  
+  // Branch class
+  class Branch {
+    constructor() {
+      this.reset();
+    }
+    
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.length = 0;
+      this.maxLength = 100 + Math.random() * 200;
+      this.angle = Math.random() * Math.PI * 2;
+      this.speed = 0.5 + Math.random() * 1;
+      this.color = `rgba(${PRIMARY_COLOR_RGB}, ${0.3 + Math.random() * 0.4})`;
+      this.branches = [];
+      this.hasBranched = false;
+    }
+    
+    update() {
+      this.length += this.speed;
+      
+      // Randomly create a branch
+      if (!this.hasBranched && this.length > this.maxLength * 0.5 && Math.random() < 0.02) {
+        this.hasBranched = true;
+        const newBranch = new Branch();
+        newBranch.x = this.x + Math.cos(this.angle) * this.length;
+        newBranch.y = this.y + Math.sin(this.angle) * this.length;
+        newBranch.angle = this.angle + (Math.random() - 0.5) * Math.PI / 2;
+        newBranch.maxLength = this.maxLength * 0.7;
+        this.branches.push(newBranch);
+      }
+      
+      // Update child branches
+      this.branches.forEach(branch => branch.update());
+      
+      // Reset if too long
+      if (this.length > this.maxLength) {
+        this.reset();
+      }
+    }
+    
+    draw() {
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y);
+      const endX = this.x + Math.cos(this.angle) * this.length;
+      const endY = this.y + Math.sin(this.angle) * this.length;
+      ctx.lineTo(endX, endY);
+      ctx.strokeStyle = this.color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      
+      // Draw node at the end
+      ctx.beginPath();
+      ctx.arc(endX, endY, 3, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+      
+      // Draw child branches
+      this.branches.forEach(branch => branch.draw());
+    }
+  }
+  
+  // Create initial branches
+  const branches = [];
+  for (let i = 0; i < 5; i++) {
+    branches.push(new Branch());
+  }
+  
+  // Animation loop
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    branches.forEach(branch => {
+      branch.update();
+      branch.draw();
+    });
+    
+    requestAnimationFrame(animate);
+  }
+  
+  animate();
+})();
