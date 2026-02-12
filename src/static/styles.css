@@ -182,6 +182,13 @@ section h3 {
   width: 100%;
 }
 
+/* Override grid for calendar view */
+#activities-list:has(#calendar-view) {
+  display: block;
+  grid-template-columns: none;
+  gap: 0;
+}
+
 .activity-card {
   padding: 12px;
   border: 1px solid var(--border);
