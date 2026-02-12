@@ -1,0 +1,124 @@
+name: UI/UX Enhancement
+description: Suggest improvements to the look, feel, or user experience of the school activities system
+title: "[UI/UX]: "
+labels: ["enhancement", "ui-ux"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a UI/UX improvement! Help us make the system more user-friendly and visually appealing.
+
+  - type: textarea
+    id: current-state
+    attributes:
+      label: Current State
+      description: Describe how the interface currently looks or works.
+      placeholder: "Example: The activity cards are all blue with white text..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem-description
+    attributes:
+      label: Problem or Concern
+      description: What issue or concern does the current design create? Who is affected?
+      placeholder: "Example: Students have complained that the blue doesn't match our school colors (white and lime green), and it doesn't show school pride..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-change
+    attributes:
+      label: Proposed Change
+      description: Describe specifically what you'd like to change or improve.
+      placeholder: "Example: Change the color scheme to white and lime green to match our school colors, and add mascot images from https://octodex.github.com/"
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: List the specific visual or functional requirements that must be met.
+      placeholder: |
+        Example:
+        - [ ] Primary color changed to lime green (#32CD32)
+        - [ ] Background changed to white
+        - [ ] At least 3 different mascot images displayed
+        - [ ] Design is responsive on mobile devices
+    validations:
+      required: true
+
+  - type: dropdown
+    id: ui-component
+    attributes:
+      label: UI Component Affected
+      description: Which part of the interface needs to be changed?
+      options:
+        - Colors / Theme
+        - Layout / Spacing
+        - Typography / Fonts
+        - Buttons / Controls
+        - Navigation
+        - Activity Cards
+        - Modals / Popups
+        - Filters / Sidebar
+        - Animations / Effects
+        - Icons / Images
+        - Overall Design
+    validations:
+      required: true
+
+  - type: dropdown
+    id: devices-affected
+    attributes:
+      label: Devices Affected
+      description: Which devices should this enhancement work on?
+      multiple: true
+      options:
+        - Desktop / Laptop
+        - Tablet
+        - Mobile Phone
+        - All Devices
+    validations:
+      required: true
+
+  - type: textarea
+    id: design-reference
+    attributes:
+      label: Design References or Examples
+      description: Provide links, images, or descriptions of similar designs that inspire your suggestion.
+      placeholder: "Example: Similar to how https://example.com displays their cards, or like the Material Design style..."
+
+  - type: textarea
+    id: visual-mockup
+    attributes:
+      label: Visual Mockup or Sketch
+      description: If you have a mockup, sketch, or screenshot showing your idea, attach it here. You can drag and drop images.
+
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Design Constraints
+      description: Select any constraints that apply to this enhancement.
+      options:
+        - label: Must maintain accessibility standards (readable text, color contrast)
+          required: true
+        - label: Must work with existing dark mode toggle
+        - label: Should match overall site design language
+        - label: Must not break existing functionality
+          required: true
+        - label: Must be responsive across all screen sizes
+
+  - type: textarea
+    id: technical-hints
+    attributes:
+      label: Technical Implementation Hints (Optional)
+      description: If you have ideas about how to implement this (CSS classes, libraries, etc.), share them here.
+      placeholder: "Example: Could use CSS variables for easy theme switching, or might need to update the styles.css file..."
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other information, user feedback, or context that might be helpful.

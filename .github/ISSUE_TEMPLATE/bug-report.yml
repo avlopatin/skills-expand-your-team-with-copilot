@@ -1,0 +1,126 @@
+name: Bug Report
+description: Report a problem or error in the school activities system
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug! Please provide as much detail as possible to help us fix the issue.
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Bug Description
+      description: Clearly describe what is wrong or not working as expected.
+      placeholder: "Example: When I click the 'Register' button for an activity, nothing happens..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: "Example: I expected to see a confirmation message and be registered for the activity..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual Behavior
+      description: What actually happened instead?
+      placeholder: "Example: The page just refreshes and no registration is recorded..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Provide step-by-step instructions to reproduce the bug.
+      placeholder: |
+        1. Go to the activities page
+        2. Click on 'Soccer Practice'
+        3. Click the 'Register' button
+        4. See the error
+    validations:
+      required: true
+
+  - type: dropdown
+    id: bug-area
+    attributes:
+      label: Bug Location
+      description: Where in the application does this bug occur?
+      options:
+        - Activity List / Display
+        - Registration Process
+        - Login / Authentication
+        - Filtering / Search
+        - Dark Mode
+        - Mobile View
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity Level
+      description: How severe is this bug?
+      options:
+        - Critical - System is unusable
+        - High - Major functionality broken
+        - Medium - Feature works but has issues
+        - Low - Minor cosmetic issue
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      description: Which browser are you using?
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Mobile Browser
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: error-messages
+    attributes:
+      label: Error Messages or Console Output
+      description: If you see any error messages or console errors, paste them here. (Press F12 to open developer tools)
+      placeholder: "Example: TypeError: Cannot read property 'id' of undefined..."
+      render: shell
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain the problem. You can drag and drop images here.
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria for Fix
+      description: What specific criteria must be met for this bug to be considered fixed?
+      placeholder: |
+        Example:
+        - [ ] Registration button successfully registers users
+        - [ ] Confirmation message appears after registration
+        - [ ] User appears in the registered list
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context about the problem here. When did it start? Does it happen every time?

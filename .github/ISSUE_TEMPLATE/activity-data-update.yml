@@ -1,0 +1,100 @@
+name: Activity Data Update
+description: Request changes to activity data, categories, or content in the system
+title: "[Data]: "
+labels: ["data", "content"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to request updates to activities, categories, or other content in the system.
+
+  - type: dropdown
+    id: update-type
+    attributes:
+      label: Type of Update
+      description: What kind of data update do you need?
+      options:
+        - Add new activity
+        - Update existing activity
+        - Remove activity
+        - Add new category
+        - Update activity details (time, location, etc.)
+        - Other data change
+    validations:
+      required: true
+
+  - type: textarea
+    id: activity-details
+    attributes:
+      label: Activity or Data Details
+      description: Provide specific details about the activity or data that needs to be updated.
+      placeholder: |
+        Example for new activity:
+        - Name: Robotics Club
+        - Category: Technology
+        - Day: Tuesday
+        - Time: 3:30 PM
+        - Location: Room 204
+        - Difficulty: Intermediate
+        - Max participants: 20
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason-for-change
+    attributes:
+      label: Reason for Change
+      description: Why is this update needed?
+      placeholder: "Example: We've started a new robotics program and need to allow students to register for it..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What must be true when this update is complete?
+      placeholder: |
+        Example:
+        - [ ] New activity appears in the activity list
+        - [ ] Activity can be filtered by Technology category
+        - [ ] Students can register for the activity
+        - [ ] Activity shows correct time and location
+    validations:
+      required: true
+
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: Urgency
+      description: When does this need to be completed?
+      options:
+        - Urgent - Needed immediately
+        - Soon - Within a few days
+        - Normal - No rush
+    validations:
+      required: true
+
+  - type: textarea
+    id: data-source
+    attributes:
+      label: Data Source or Reference
+      description: Where should we get the accurate information? (e.g., email from administrator, official schedule, etc.)
+      placeholder: "Example: See the attached email from Principal Johnson with the approved activity schedule..."
+
+  - type: checkboxes
+    id: verification
+    attributes:
+      label: Verification
+      description: Please confirm the following
+      options:
+        - label: I have verified this information is accurate and approved
+          required: true
+        - label: This change has been approved by school administration
+          required: true
+
+  - type: textarea
+    id: additional-notes
+    attributes:
+      label: Additional Notes
+      description: Any other information that might be helpful.
