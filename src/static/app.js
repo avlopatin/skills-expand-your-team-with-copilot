@@ -637,9 +637,7 @@ document.addEventListener("DOMContentLoaded", () => {
                           const enrollment = `${activity.details.participants.length}/${activity.details.max_participants}`;
                           return `
                             <div class="calendar-event" 
-                                 data-activity-name="${escapeHtml(activity.name)}"
-                                 onmouseenter="showEventTooltip(event, this)"
-                                 onmouseleave="hideEventTooltip()">
+                                 data-activity-name="${escapeHtml(activity.name)}">
                               <div class="calendar-event-title">${escapeHtml(activity.name)}</div>
                               <div class="calendar-event-enrollment">${enrollment}</div>
                             </div>
@@ -658,6 +656,72 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     
     activitiesList.innerHTML = calendarHTML;
+    
+    // Set up event delegation for calendar event tooltips
+    const calendarView = document.getElementById("calendar-view");
+    if (calendarView) {
+      const tooltip = document.getElementById("event-tooltip");
+      
+      calendarView.addEventListener("mouseenter", function(event) {
+        if (event.target.closest(".calendar-event")) {
+          const element = event.target.closest(".calendar-event");
+          if (!tooltip) return;
+          
+          const activityName = element.getAttribute("data-activity-name");
+          const activity = allActivities[activityName];
+          
+          if (!activity) return;
+          
+          const enrollment = `${activity.participants.length}/${activity.max_participants}`;
+          const schedule = formatSchedule(activity);
+          
+          tooltip.innerHTML = `
+            <div class="calendar-event-tooltip-title">${escapeHtml(activityName)}</div>
+            <div class="calendar-event-tooltip-detail"><strong>Schedule:</strong> ${schedule}</div>
+            <div class="calendar-event-tooltip-detail"><strong>Enrollment:</strong> ${enrollment}</div>
+            <div class="calendar-event-tooltip-detail"><strong>Description:</strong> ${escapeHtml(activity.description)}</div>
+          `;
+          
+          // Position tooltip near the mouse, keeping it within viewport
+          let left = event.pageX + 10;
+          let top = event.pageY - 10;
+          
+          // Make tooltip visible temporarily to measure its size
+          tooltip.style.left = `${left}px`;
+          tooltip.style.top = `${top}px`;
+          tooltip.classList.add("show");
+          
+          // Adjust position if tooltip goes off-screen
+          const tooltipRect = tooltip.getBoundingClientRect();
+          const viewportWidth = window.innerWidth;
+          const viewportHeight = window.innerHeight;
+          
+          if (tooltipRect.right > viewportWidth) {
+            left = event.pageX - tooltipRect.width - 10;
+          }
+          if (tooltipRect.bottom > viewportHeight) {
+            top = event.pageY - tooltipRect.height - 10;
+          }
+          if (tooltipRect.left < 0) {
+            left = 10;
+          }
+          if (tooltipRect.top < 0) {
+            top = 10;
+          }
+          
+          tooltip.style.left = `${left}px`;
+          tooltip.style.top = `${top}px`;
+        }
+      }, true);
+      
+      calendarView.addEventListener("mouseleave", function(event) {
+        if (event.target.closest(".calendar-event")) {
+          if (tooltip) {
+            tooltip.classList.remove("show");
+          }
+        }
+      }, true);
+    }
   }
   
   // Helper function to get activities for a specific day and time slot
@@ -707,41 +771,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${formatTime(startTime)}`;
   }
   
-  // Global functions for event tooltips (need to be accessible from inline handlers)
-  window.showEventTooltip = function(event, element) {
-    const tooltip = document.getElementById("event-tooltip");
-    if (!tooltip) return;
-    
-    const activityName = element.getAttribute("data-activity-name");
-    const activity = allActivities[activityName];
-    
-    if (!activity) return;
-    
-    const enrollment = `${activity.participants.length}/${activity.max_participants}`;
-    const schedule = formatSchedule(activity);
-    
-    tooltip.innerHTML = `
-      <div class="calendar-event-tooltip-title">${escapeHtml(activityName)}</div>
-      <div class="calendar-event-tooltip-detail"><strong>Schedule:</strong> ${schedule}</div>
-      <div class="calendar-event-tooltip-detail"><strong>Enrollment:</strong> ${enrollment}</div>
-      <div class="calendar-event-tooltip-detail"><strong>Description:</strong> ${escapeHtml(activity.description)}</div>
-    `;
-    
-    // Position tooltip near the mouse
-    const rect = element.getBoundingClientRect();
-    tooltip.style.left = `${event.pageX + 10}px`;
-    tooltip.style.top = `${event.pageY - 10}px`;
-    tooltip.classList.add("show");
-  };
-  
-  window.hideEventTooltip = function() {
-    const tooltip = document.getElementById("event-tooltip");
-    if (tooltip) {
-      tooltip.classList.remove("show");
-    }
-  };
-
-  // Function to render a single activity card
+  // Helper function to convert time string (HH:MM) to minutes
   function renderActivityCard(name, details) {
     const activityCard = document.createElement("div");
     activityCard.className = "activity-card";

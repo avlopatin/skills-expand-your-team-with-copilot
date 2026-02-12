@@ -185,8 +185,6 @@ section h3 {
 /* Override grid for calendar view */
 #activities-list:has(#calendar-view) {
   display: block;
-  grid-template-columns: none;
-  gap: 0;
 }
 
 .activity-card {
