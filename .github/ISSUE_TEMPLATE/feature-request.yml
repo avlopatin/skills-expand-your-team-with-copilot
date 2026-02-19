@@ -1,0 +1,92 @@
+name: Feature Request
+description: Request a new feature or enhancement for the school activities system
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a new feature! Please provide as much detail as possible to help us understand your request.
+        
+  - type: textarea
+    id: problem-description
+    attributes:
+      label: Problem Description
+      description: Describe the problem or need that this feature would address. What challenge are you facing?
+      placeholder: "Example: Students have difficulty finding activities that fit their schedule because..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: Describe what you would like to see implemented. Be as specific as possible.
+      placeholder: "Example: Add a calendar view that shows all activities arranged by day and time..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: List the specific requirements that must be met for this feature to be considered complete. Use checkboxes if helpful.
+      placeholder: |
+        Example:
+        - [ ] Calendar view is accessible from the main page
+        - [ ] Activities are displayed in their correct time slots
+        - [ ] Users can toggle between list and calendar view
+    validations:
+      required: true
+
+  - type: dropdown
+    id: feature-area
+    attributes:
+      label: Feature Area
+      description: Which part of the application does this feature relate to?
+      options:
+        - User Interface / Display
+        - Filtering / Search
+        - Activity Registration
+        - Teacher Login / Admin
+        - Database / Backend
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Level
+      description: How important is this feature to you?
+      options:
+        - High - Needed urgently
+        - Medium - Would be very helpful
+        - Low - Nice to have
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context, screenshots, mockups, or examples that might help explain your request.
+      placeholder: "Example: Similar to how Google Calendar displays events, or attach a screenshot of what you're imagining..."
+
+  - type: textarea
+    id: technical-hints
+    attributes:
+      label: Technical Hints or Suggestions (Optional)
+      description: If you have technical knowledge or ideas about how this could be implemented, share them here. This is optional.
+      placeholder: "Example: This might require adding a new endpoint to the API, or could use a JavaScript calendar library..."
+
+  - type: checkboxes
+    id: limitations
+    attributes:
+      label: Known Limitations
+      description: Are there any constraints we should be aware of?
+      options:
+        - label: This feature must work on mobile devices
+        - label: This feature should not require additional user authentication
+        - label: This feature must be compatible with existing data
+        - label: Performance should not be significantly impacted
