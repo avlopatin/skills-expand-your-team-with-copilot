@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const dayFilters = document.querySelectorAll(".day-filter");
   const timeFilters = document.querySelectorAll(".time-filter");
   const difficultyFilters = document.querySelectorAll(".difficulty-filter");
+  const groupByButton = document.getElementById("group-by-button");
 
   // Authentication elements
   const loginButton = document.getElementById("login-button");
@@ -76,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentDay = "";
   let currentTimeRange = "";
   let currentDifficulty = "";
+  let isGroupedByCategory = false;
 
   // Authentication state
   let currentUser = null;
@@ -545,14 +547,82 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Display filtered activities
+    // Display filtered activities - grouped or ungrouped
+    if (isGroupedByCategory) {
+      displayGroupedActivities(filteredActivities);
+    } else {
+      Object.entries(filteredActivities).forEach(([name, details]) => {
+        renderActivityCard(name, details);
+      });
+    }
+  }
+
+  // Function to display activities grouped by category
+  function displayGroupedActivities(filteredActivities) {
+    // Group activities by category
+    const groupedActivities = {};
+    
     Object.entries(filteredActivities).forEach(([name, details]) => {
-      renderActivityCard(name, details);
+      const activityType = getActivityType(name, details.description);
+      
+      if (!groupedActivities[activityType]) {
+        groupedActivities[activityType] = [];
+      }
+      
+      groupedActivities[activityType].push({ name, details });
+    });
+
+    // Category icons for visual appeal
+    const categoryIcons = {
+      sports: "⚽",
+      arts: "🎨",
+      academic: "📚",
+      community: "🤝",
+      technology: "💻"
+    };
+
+    // Define the order of categories
+    const categoryOrder = ["sports", "arts", "academic", "community", "technology"];
+
+    // Display each category group
+    categoryOrder.forEach((category) => {
+      if (groupedActivities[category] && groupedActivities[category].length > 0) {
+        const typeInfo = activityTypes[category];
+        const activities = groupedActivities[category];
+        
+        // Create category group container
+        const groupDiv = document.createElement("div");
+        groupDiv.className = "category-group";
+        
+        // Create category header
+        const headerDiv = document.createElement("div");
+        headerDiv.className = "category-group-header";
+        headerDiv.innerHTML = `
+          <span class="category-group-icon">${categoryIcons[category]}</span>
+          <span>${typeInfo.label}</span>
+          <span class="category-group-count">${activities.length}</span>
+        `;
+        
+        groupDiv.appendChild(headerDiv);
+        
+        // Create activities container
+        const activitiesContainer = document.createElement("div");
+        activitiesContainer.className = "category-group-activities";
+        
+        // Add each activity card
+        activities.forEach(({ name, details }) => {
+          const card = createActivityCardElement(name, details);
+          activitiesContainer.appendChild(card);
+        });
+        
+        groupDiv.appendChild(activitiesContainer);
+        activitiesList.appendChild(groupDiv);
+      }
     });
   }
 
-  // Function to render a single activity card
-  function renderActivityCard(name, details) {
+  // Function to create activity card element (extracted for reuse)
+  function createActivityCardElement(name, details) {
     const activityCard = document.createElement("div");
     activityCard.className = "activity-card";
 
@@ -687,6 +757,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
+    return activityCard;
+  }
+
+  // Function to render a single activity card
+  function renderActivityCard(name, details) {
+    const activityCard = createActivityCardElement(name, details);
     activitiesList.appendChild(activityCard);
   }
 
@@ -746,6 +822,26 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", () => {
       setDifficultyFilter(button.dataset.difficulty);
     });
+  });
+
+  // Add event listener for group-by toggle button
+  groupByButton.addEventListener("click", () => {
+    // Toggle the grouped state
+    isGroupedByCategory = !isGroupedByCategory;
+    
+    // Update button appearance
+    groupByButton.dataset.grouped = isGroupedByCategory;
+    
+    // Update button text
+    const toggleText = groupByButton.querySelector(".toggle-text");
+    if (isGroupedByCategory) {
+      toggleText.textContent = "Show All Together";
+    } else {
+      toggleText.textContent = "Group by Category";
+    }
+    
+    // Refresh the display
+    displayFilteredActivities();
   });
 
   // Open registration modal
